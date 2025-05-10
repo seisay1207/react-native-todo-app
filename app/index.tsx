@@ -27,6 +27,11 @@ export default function App() {
     setTodoText("");
   };
 
+  const deleteTodo = (id: string) => {
+    const updatedTodo = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodo);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My Todo App</Text>
@@ -43,7 +48,10 @@ export default function App() {
         data={todos}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Text style={styles.todoItem}>{item.text}</Text>
+          <View style={styles.todoItem}>
+            <Text style={styles.todoTitle}>{item.text}</Text>
+            <Button title="Delete" onPress={() => deleteTodo(item.id)} />
+          </View>
         )}
       />
     </View>
@@ -76,7 +84,12 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   todoItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+  },
+  todoTitle: {
+    flex: 1,
     fontSize: 18,
-    paddingVertical: 8,
   },
 });
